@@ -1,5 +1,4 @@
-; p2.asm
-; Build: nasm -g -f elf -F dwarf -o p2.o p2.asm && ld p2.o -m elf_i386 -o p2
+
 
 SECTION .data
   title      db "The Multiplying Program",10
@@ -14,7 +13,7 @@ SECTION .bss
   in1   resb 2
   in2   resb 2
   num2  resb 1        ; numeric second input
-  ans   resb 1        ; <— renamed from 'out'
+  ans   resb 1       
 
 SECTION .text
   global _start

@@ -1,4 +1,4 @@
-; p1.asm
+
 SECTION .data
   title      db "The Adding Program", 10
   title_len  equ $-title
@@ -11,7 +11,7 @@ SECTION .data
 SECTION .bss
   in1  resb 2       ; char + newline
   in2  resb 2
-  ans  resb 1       ; <— renamed from 'out'
+  ans  resb 1       
 
 SECTION .text
   global _start
