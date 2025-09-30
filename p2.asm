@@ -13,8 +13,8 @@ SECTION .data
 SECTION .bss
   in1   resb 2
   in2   resb 2
-  num2  resb 1    ; store numeric second input
-  out   resb 1
+  num2  resb 1        ; numeric second input
+  ans   resb 1        ; <— renamed from 'out'
 
 SECTION .text
   global _start
@@ -58,20 +58,18 @@ _start:
 
   mov bl, [in2]
   sub bl, '0'
-  mov [num2], bl       ; save second number in memory
+  mov [num2], bl       ; store second number (as byte) in memory
 
-  ; AX must be zeroed for 8-bit IMUL result safety
+  ; zero AX, reload AL, and multiply by [num2]
   xor ax, ax
   mov al, [in1]
   sub al, '0'
+  imul byte [num2]     ; AX = AL * [num2]; assume result is single digit
 
-  imul byte [num2]     ; AX = AL * [num2]
-  ; assume single-digit result -> AL holds low 8 bits
+  add al, '0'          ; make printable
+  mov [ans], al
 
-  add al, '0'
-  mov [out], al
-
-  ; print answer line
+  ; print answer
   mov eax,4
   mov ebx,1
   mov ecx,amsg
@@ -80,7 +78,7 @@ _start:
 
   mov eax,4
   mov ebx,1
-  mov ecx,out
+  mov ecx,ans
   mov edx,1
   int 0x80
 
@@ -90,6 +88,7 @@ _start:
   mov edx,1
   int 0x80
 
+  ; exit
   mov eax,1
   xor ebx,ebx
   int 0x80
