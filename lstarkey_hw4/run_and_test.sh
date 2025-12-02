@@ -1,18 +1,14 @@
 #!/bin/sh
 set -e
 
-# Build, then run two scripted sessions that cover all menu options (1→5) and a few edge cases.
-
-BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"    
-
-echo "== Building =="
-nasm -g -f elf32 -F dwarf -o functions.o functions.asm
-gcc -g -Wall -static -m32 -o backandforth backandforth_all.c functions.o
+# Run two scripted sessions that cover all menu options (1→5) and a few edge cases.
+SCRIPT_DIR="$(cd -- "$(dirname -- "$0")" && pwd)"
+cd "$SCRIPT_DIR"
 
 run_session() {
   name="$1"
   input="$2"
-  log="$(mktemp "$BASE_DIR/lstarkey_hw4/backandforth_${name}.XXXX.log")"
+  log="$(mktemp "$SCRIPT_DIR/backandforth_${name}.XXXX.log")"
   printf "== %s ==\n" "$name"
   printf "%s" "$input" | ./backandforth >"$log"
   printf "Output logged to %s\n" "$log"
