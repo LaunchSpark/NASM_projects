@@ -9,6 +9,7 @@ global palindrome_check
 extern atoi          ; from stdlib
 extern printf        ; from stdio
 extern scanf         ; from stdio
+extern getchar       ; from stdio
 extern is_palindromeC
 extern fact
 
@@ -151,6 +152,16 @@ palindrome_check:
     push    fmt_str
     call    scanf
     add     esp, 8
+
+    ; flush the rest of the line (consume newline so the C menu read works)
+.flush_loop:
+    call    getchar
+    cmp     eax, 10              ; '\n'
+    je      .flush_done
+    cmp     eax, -1              ; EOF
+    je      .flush_done
+    jmp     .flush_loop
+.flush_done:
 
     ; 3) result = is_palindromeC(pal_buf);
     push    pal_buf
