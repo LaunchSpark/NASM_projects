@@ -3,8 +3,7 @@ set -e
 
 # Build, then run two scripted sessions that cover all menu options (1→5) and a few edge cases.
 
-BASE_DIR=$(cd -- "$(dirname -- "$0")" && pwd)
-cd "$BASE_DIR/lstarkey_hw4"
+BASE_DIR="$(cd "$(dirname "$0")/.." && pwd)"    
 
 echo "== Building =="
 nasm -g -f elf32 -F dwarf -o functions.o functions.asm
