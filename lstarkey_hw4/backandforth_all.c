@@ -78,8 +78,10 @@ int main(void) {
             break;
 
         case 5:
-        default:
             running = 0;
+            break;
+        default:
+            printf("Invalid choice: %d\n", choice);
             break;
         }
     }
